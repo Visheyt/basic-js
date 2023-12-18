@@ -18,7 +18,7 @@ function getSeason(date) {
     throw new Error("Invalid date!")
   }
   let month = date.getMonth()
-  if (month>0 && month<2 || month === 11) {
+  if (month>=0 && month<2 || month === 11) {
     return "winter"
   }if (month>1 && month <5){
     return "spring"
