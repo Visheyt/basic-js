@@ -59,13 +59,46 @@ class VigenereCipheringMachine {
         }
       }
       if (this.command == true ){return finalStr}
+      else{return finalStr.split("").reverse().join("")}
 
   }
-  decrypt(encryptedMessage,key) {
-    if (!encryptedMessage ||!key){
+  decrypt(encryptedMessage,decryptKey) {
+    if (!encryptedMessage ||!decryptKey){
       throw new Error("Incorrect arguments!");
     }
-  }
+    let str = encryptedMessage
+    let spaces =[]
+    for (let i =0; i<str.length; i++){
+      if(str[i]==" "){
+        spaces.push(i)
+      }
+    }
+    let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    let finalStr = ""
+    let charsObj = new Object()
+    decryptKey = decryptKey.toUpperCase()
+    str = str.toUpperCase().replaceAll(" ","")
+    for (let i = 0 ;i<chars.length ; i++){
+      charsObj[chars[i]] = i
+    }
+    for (let j = 0; j<str.length;j++){
+      let x = (charsObj[str[j]]-charsObj[decryptKey[j%decryptKey.length]]+chars.length)%chars.length
+      if (!x && x!==0){
+        x = str[j]
+      }else {
+        x = chars[x]
+      }
+      finalStr +=x
+    }
+    for (let i = 0 ; i<spaces.length;i++){
+      for (let j = 0 ; j<finalStr.length;j++){
+        if (j == spaces[i]){
+          finalStr = finalStr.slice(0,j)+" "+finalStr.slice(j,finalStr.length)  
+        }
+      }
+    }
+  if (this.command==true) {return finalStr}
+  else{return finalStr.split("").reverse().join("")}}
 }
 
 module.exports = {
